@@ -1,5 +1,5 @@
 #  Laravel 5 CodeDeploy Template
-by Piethein Strengholt
+> Piethein Strengholt (2017)
 
 ## About
 An example template for deploying Laravel applications with AWS CodePipeline across an autoscaling group.

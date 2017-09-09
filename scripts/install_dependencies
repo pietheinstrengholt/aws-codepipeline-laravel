@@ -10,10 +10,6 @@ yum update -y
 yum install -y mysql mysql-server
 yum install -y curl
 yum install -y git
-yum install -y python3-pip
-
-# aws cli
-pip3 install awscli
 
 # Remove current apache & php
 yum -y remove httpd* php*

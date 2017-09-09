@@ -19,7 +19,7 @@ If you want to clone a private repository and want to use a deploy key you can c
 ssh-keygen -t rsa -C "your_email@youremail.com"
 ```
 
-This will generate a public and a private key. It is best to not type a password, since we don't want to interrupt the deployment process. Add the public key to your GitHub Deploy keys section under settings. The private key key be added to the appspec.yml file and used during the deployment. See more information here:
+This will generate a public and a private key. It is best to not type a password, since we don't want to interrupt the deployment process. Add the public key to your GitHub Deploy keys section under settings. The private key should be packaged and added to the appspec.yml file and used during the deployment. See more information here:
 http://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-files.html
 
 Next step is the following commands. This will start the ssh-agent, trust github and import the private key for your project. You might want to change the location of the rsa file and need to type in your github repository location.

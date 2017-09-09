@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Cleanup html and clone reposity
+cd /var/www/html/
+git init
+git remote add origin https://github.com/laravel/laravel.git
+git clean -f -d  # this is required if files in the non-empty directory are in the repo
+git fetch
+git reset --hard origin/master
+
+# Create cache and chmod folders
+mkdir -p /var/www/html/bootstrap/cache
+mkdir -p /var/www/html/storage/framework/sessions
+mkdir -p /var/www/html/storage/framework/views
+mkdir -p /var/www/html/storage/framework/cache
+mkdir -p /var/www/html/public/files/
+
+# Configure Env
+cp /var/www/html/.env.example /var/www/html/.env
+
+# Install dependencies
+cd /var/www/html/ && composer install
+
+# Configure Application Key
+php /var/www/html/artisan key:generate
+
+# Migrate all tables
+#php /var/www/html/artisan migrate
+
+# Clear any previous cached views and optimize the application
+php /var/www/html/artisan cache:clear
+php /var/www/html/artisan view:clear
+php /var/www/html/artisan config:cache
+php /var/www/html/artisan optimize
+#php /var/www/html/artisan route:cache
+
+# Change rights
+chmod 777 -R /var/www/html/bootstrap/cache
+chmod 777 -R /var/www/html/storage
+chmod 777 -R /var/www/html/public/files/
+
+# Replace environment variables
+sed -e '/\(^APP_URL=\).*/ s//\1http:\/\/localhost/' -i .env
+sed -e '/\(^APP_DEBUG=\).*/ s//\1false/' -i .env
+sed -e '/\(^APP_NAME=\).*/ s//\1laravel/' -i .env
+sed -e '/\(^APP_KEY=\).*/ s//\1base64:awH2+cVts6F2AFbXIcTx0t5nd2GbCkkzkY+Tw\/tYQDM=/' -i .env
+sed -e '/\(^DB_DATABASE=\).*/ s//\1database/' -i .env
+sed -e '/\(^DB_USERNAME=\).*/ s//\1username/' -i .env
+sed -e '/\(^DB_PASSWORD=\).*/ s//\1password/' -i .env
+
+# Bring up application
+php /var/www/html/artisan up

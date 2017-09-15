@@ -24,6 +24,7 @@ yum -y install httpd24
 sed -i 's#AllowOverride None#AllowOverride All#' /etc/httpd/conf/httpd.conf
 
 # Change apache document root
+mkdir -p /var/www/html/public
 sed -i 's#DocumentRoot "/var/www/html"#DocumentRoot "/var/www/html/public"#' /etc/httpd/conf/httpd.conf
 
 # Change apache directory index

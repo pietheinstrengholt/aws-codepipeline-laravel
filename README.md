@@ -1,4 +1,4 @@
-#  Laravel 5 CodeDeploy Template
+#  Laravel 5 CodePipeline & CodeDeploy Template
 > Piethein Strengholt (2017)
 
 ## About

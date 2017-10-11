@@ -13,8 +13,8 @@ mkdir -p /var/www/html/public/files/
 # Install dependencies
 cd /var/www/html/ && composer install
 
-# Copy configuration
-aws s3 cp s3://aab-aws-alex/configuration/.env.test /var/www/html/.env
+# Copy configuration from /var/www/.env, see README.MD for more information
+cp /var/www/.env /var/www/html/.env
 
 # Migrate all tables
 php /var/www/html/artisan migrate

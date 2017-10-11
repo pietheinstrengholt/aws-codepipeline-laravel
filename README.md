@@ -12,6 +12,36 @@ The deploy_laravel script takes care of the Laravel deployment. You might want t
 Currently it is not possible to pass AWS variables into buildspec.yml from CodePipeline. See more info:
 https://stackoverflow.com/questions/41704517/aws-pass-in-variable-into-buildspec-yml-from-codepipeline
 
+As an alternative you can consider the JSON snippet below for your CloudFormation script. The DBHost, DBName, DBUsername and DBPassword varables refer to your database parameters, which should also be defined in your CloudFormation script.
+```
+"files" : {
+  "/var/www/.env" : {
+    "content" : { "Fn::Join" : ["", [
+      "APP_ENV=local\n",
+      "APP_DEBUG=true\n",
+      "APP_KEY=base64:l6kg/jw8Bk1c70FztrJfhXz9mqocYp+aHT1F7JahjxQ=\n",
+      "\n",
+      "APP_URL=http://localhost\n",
+      "SESSION_DOMAIN=localhost\n",
+      "\n",
+      "DB_CONNECTION=mysql\n",
+      "DB_HOST=", { "Ref" : "DBHost" }, "\n",
+      "DB_PORT=3306\n",
+      "DB_DATABASE=", { "Ref" : "DBName" }, "\n",
+      "DB_USERNAME=", { "Ref" : "DBUsername" }, "\n",
+      "DB_PASSWORD=", { "Ref" : "DBPassword" }, "\n",
+      "\n",
+      "CACHE_DRIVER=file\n",
+      "SESSION_DRIVER=database\n",
+      "QUEUE_DRIVER=sync\n"
+      ]]},
+    "mode"  : "000644",
+    "owner" : "root",
+    "group" : "root"
+  }
+}
+```
+
 ## Deploy key
 If you want to clone a private repository and want to use a deploy key you can consider doing the following. Type the following command:
 

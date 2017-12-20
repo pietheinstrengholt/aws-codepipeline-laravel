@@ -61,3 +61,28 @@ ssh-agent bash -c 'ssh-add /root/id_rsa_file; git clone https://github.com:user/
 ```
 
 When using the steps above, the deployment will automatically run.
+
+
+## Access to the AutoScaling API 
+Make sure the EC2 instances have access to the AutoScaling API. You can achieve this by adding the following policy:
+
+```
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "autoscaling:Describe*",
+        "autoscaling:EnterStandby",
+        "autoscaling:ExitStandby",
+        "cloudformation:Describe*",
+        "cloudformation:GetTemplate",
+        "s3:Get*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+See more information here: https://aws.amazon.com/blogs/devops/use-aws-codedeploy-to-deploy-to-amazon-ec2-instances-behind-an-elastic-load-balancer-2/

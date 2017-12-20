@@ -11,7 +11,8 @@ mkdir -p /var/www/html/storage/framework/cache
 mkdir -p /var/www/html/public/files/
 
 # Install dependencies
-cd /var/www/html/ && composer install
+export COMPOSER_ALLOW_SUPERUSER=1
+composer install -d /var/www/html/
 
 # Copy configuration from /var/www/.env, see README.MD for more information
 cp /var/www/.env /var/www/html/.env
